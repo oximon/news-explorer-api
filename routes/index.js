@@ -1,20 +1,12 @@
 const router = require('express').Router();
-const { Joi, celebrate } = require('celebrate');
-const { login, createUser } = require('../controllers/users');
+const userRouter = require('./users');
+const articlesRouter = require('./articles');
+const authRouter = require('./auth');
+const notValidUrlRouter = require('../controllers/notValidUrl');
 
-router.post('/signup', celebrate({
-  body: Joi.object().keys({
-    password: Joi.string().required().min(8),
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-  }),
-}), createUser);
-
-router.post('/signin', celebrate({
-  body: Joi.object().keys({
-    password: Joi.string().required().min(8),
-    email: Joi.string().required().email(),
-  }),
-}), login);
+router.use('/', userRouter);
+router.use('/', articlesRouter);
+router.use('/', authRouter);
+router.use('*', notValidUrlRouter);
 
 module.exports = router;

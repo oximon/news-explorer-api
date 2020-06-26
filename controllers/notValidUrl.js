@@ -1,6 +1,6 @@
 const NotFoundError = require('../errors/NotFoundError');
 
-module.exports.notValidUrl = (req, res, next) => {
+module.exports = (req, res, next) => {
   try {
     throw new NotFoundError('Запрашиваемый ресурс не найден');
   } catch (err) {

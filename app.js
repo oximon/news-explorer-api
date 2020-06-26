@@ -5,14 +5,10 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
-const userRouter = require('./routes/users');
-const articleRouter = require('./routes/articles');
-const indexRouter = require('./routes/index');
-const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { centerErrors } = require('./middlewares/centerErrors');
 const { DATABASE_URL, PORT } = require('./config');
-const { notValidUrl } = require('./controllers/notValidUrl');
+const routers = require('./routes/index');
 
 const app = express();
 
@@ -36,11 +32,7 @@ mongoose.connect(DATABASE_URL, {
 app
   .use(requestLogger)
   .use('/', apiLimiter)
-  .use(indexRouter)
-  .use(auth)
-  .use(articleRouter)
-  .use(userRouter)
-  .use(notValidUrl)
+  .use(routers)
   .use(errors())
   .use(errorLogger)
   .use(centerErrors)

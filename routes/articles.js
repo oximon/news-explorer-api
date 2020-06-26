@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Joi, celebrate } = require('celebrate');
+const { auth } = require('../middlewares/auth');
 
 const customValidation = Joi.string().required().custom((value, helpers) => {
   const pattern = new RegExp('^(https?:\\/\\/)?' // protocol
@@ -20,7 +21,7 @@ const {
   deleteArticle,
 } = require('../controllers/articles');
 
-router.get('/articles', getArticles);
+router.get('/articles', auth, getArticles);
 
 router.post('/articles', celebrate({
   body: Joi.object().keys({
@@ -32,12 +33,12 @@ router.post('/articles', celebrate({
     link: customValidation,
     image: customValidation,
   }),
-}), createArticle);
+}), auth, createArticle);
 
 router.delete('/articles/:id', celebrate({
   params: Joi.object().keys({
     id: Joi.string().length(24).required().alphanum(),
   }),
-}), deleteArticle);
+}), auth, deleteArticle);
 
 module.exports = router;
