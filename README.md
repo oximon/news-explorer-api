@@ -1,6 +1,6 @@
 # news-explorer - backend
 Актуальная версия проекта - v1.0.0.  
-## IP - [84.201.145.241](http://84.201.145.241/) Ссылка -  [news-expl0rer.tk](http://news-expl0rer.tk/)
+## Ссылка -  [news-expl0rer.tk](http://api.news-expl0rer.tk/)
 
 В проекте можно зарегистрироваться, авторизоваться, добавить/удалить статью.  
 Здесь используются следующие техногологии: GIT, nodeJS, express.
