@@ -12,6 +12,7 @@ const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { centerErrors } = require('./middlewares/centerErrors');
 const { DATABASE_URL, PORT } = require('./config');
+const { notValidUrl } = require('./controllers/notValidUrl');
 
 const app = express();
 
@@ -39,7 +40,7 @@ app
   .use(auth)
   .use(articleRouter)
   .use(userRouter)
-  .use('*', (req, res) => res.status(404).send({ message: 'Запрашиваемый ресурс не найден' }))
+  .use(notValidUrl)
   .use(errors())
   .use(errorLogger)
   .use(centerErrors)
