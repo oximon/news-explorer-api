@@ -5,7 +5,8 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.getArticles = async (req, res, next) => {
   try {
-    const articles = await Article.find({}).populate('user');
+    const articles = await Article.find({ owner: req.user._id }).populate('user');
+
     return res.send({ data: articles });
   } catch (err) {
     return next(err);

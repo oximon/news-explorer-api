@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const userRouter = require('./routes/users');
 const articleRouter = require('./routes/articles');
 const indexRouter = require('./routes/index');
@@ -12,6 +13,11 @@ const { centerErrors } = require('./middlewares/centerErrors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
 
 app.use(helmet());
 app.use(cookieParser());
@@ -27,6 +33,7 @@ mongoose.connect('mongodb://localhost:27017/news-explorer', {
 
 app
   .use(requestLogger)
+  .use('/', apiLimiter)
   .use(indexRouter)
   .use(auth)
   .use(articleRouter)
