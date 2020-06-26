@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const AutorizationError = require('../errors/AutorizationError');
+const { JWT_KEYS } = require('../config');
 
 module.exports.getUser = async (req, res, next) => {
   try {
@@ -42,9 +43,7 @@ module.exports.login = async (req, res, next) => {
     const user = await User.findUserByCredentials(email, password);
     const token = jwt.sign(
       { _id: user._id },
-      process.env.NODE_ENV === 'production'
-        ? process.env.JWT_SECRET
-        : 'dev-secret',
+      JWT_KEYS,
       { expiresIn: '7d' },
     );
     return res
