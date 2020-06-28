@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const { incorrectFormat } = require('../static/constants');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -27,7 +28,7 @@ const articleSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (link) => validator.isURL(link),
-      message: 'Неправильный формат ссылки',
+      message: incorrectFormat('ссылки'),
     },
   },
   image: {
@@ -35,7 +36,7 @@ const articleSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (link) => validator.isURL(link),
-      message: 'Неправильный формат картинки',
+      message: incorrectFormat('картинки'),
     },
   },
   owner: {

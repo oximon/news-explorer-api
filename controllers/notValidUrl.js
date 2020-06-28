@@ -1,9 +1,6 @@
 const NotFoundError = require('../errors/NotFoundError');
+const { notFoundSource } = require('../static/constants');
 
 module.exports = (req, res, next) => {
-  try {
-    throw new NotFoundError('Запрашиваемый ресурс не найден');
-  } catch (err) {
-    return next(err);
-  }
+  next(new NotFoundError(notFoundSource));
 };

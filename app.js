@@ -1,21 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { centerErrors } = require('./middlewares/centerErrors');
-const { DATABASE_URL, PORT } = require('./config');
+const { PORT, DATABASE_URL } = require('./config');
 const routers = require('./routes/index');
+const apiLimiter = require('./middlewares/limitter');
 
 const app = express();
-
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-});
 
 app.use(helmet());
 app.use(cookieParser());
@@ -33,8 +30,8 @@ app
   .use(requestLogger)
   .use('/', apiLimiter)
   .use(routers)
-  .use(errors())
   .use(errorLogger)
+  .use(errors())
   .use(centerErrors)
   .listen(PORT, () => {
     console.info(`Listening on port ${PORT}`);

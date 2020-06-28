@@ -1,3 +1,5 @@
+const { dublicateEmail, invalidId, serverError } = require('../static/constants');
+
 module.exports.centerErrors = (err, req, res, next) => {
   if (err.name === 'ValidationError') {
     return res.status(400).send({ message: err.message });
@@ -5,17 +7,17 @@ module.exports.centerErrors = (err, req, res, next) => {
   if (err.code === 11000) {
     return res
       .status(409)
-      .send({ message: 'Пользователь с такой почтой уже существует' });
+      .send({ message: dublicateEmail });
   }
   if (err.name === 'CastError') {
-    return res.status(400).send({ message: 'ID не найден' });
+    return res.status(400).send({ message: invalidId });
   }
   if (!err.statusCode) {
     const { statusCode = 500, message } = err;
     return res
       .status(statusCode)
       .send({
-        message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
+        message: statusCode === 500 ? serverError : message,
       });
   }
   res.status(err.statusCode).send({ message: err.message });

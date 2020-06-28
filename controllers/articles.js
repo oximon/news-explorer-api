@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
 const Article = require('../models/article');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
+const { notFoundArticle, notEnoughRights } = require('../static/constants');
 
 module.exports.getArticles = async (req, res, next) => {
   try {
@@ -43,13 +43,11 @@ module.exports.createArticle = async (req, res, next) => {
 
 module.exports.deleteArticle = async (req, res, next) => {
   try {
-    const article = await Article.findById(req.params.id).orFail(
-      () => new NotFoundError('Карточка не найдена'),
+    const article = await Article.findById(req.params.id).select('+owner').orFail(
+      () => new NotFoundError(notFoundArticle),
     );
-    const decoded = jwt.decode(req.cookies.jwt);
-
-    if (req.user._id !== decoded._id) {
-      throw new ForbiddenError('Недостаточно прав');
+    if (article.owner.toString() !== req.user._id) {
+      throw new ForbiddenError(notEnoughRights);
     }
     await article.remove();
     return res.send({ data: article });

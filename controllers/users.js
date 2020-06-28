@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const AutorizationError = require('../errors/AutorizationError');
 const { JWT_KEYS } = require('../config');
+const { incorrectLoginOrPaswword } = require('../static/constants');
 
 module.exports.getUser = async (req, res, next) => {
   try {
@@ -54,6 +55,6 @@ module.exports.login = async (req, res, next) => {
       })
       .json({ token });
   } catch (err) {
-    return next(new AutorizationError('Неправильные логин или пароль'));
+    return next(new AutorizationError(incorrectLoginOrPaswword));
   }
 };
