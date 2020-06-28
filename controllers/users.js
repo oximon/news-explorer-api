@@ -47,6 +47,7 @@ module.exports.login = async (req, res, next) => {
       JWT_KEYS,
       { expiresIn: '7d' },
     );
+    console.log(JWT_KEYS);
     return res
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
