@@ -11,9 +11,16 @@ const { centerErrors } = require('./middlewares/centerErrors');
 const { PORT, DATABASE_URL } = require('./config');
 const routers = require('./routes/index');
 const apiLimiter = require('./middlewares/limitter');
+const cors = require('cors');
 
 const app = express();
 
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
