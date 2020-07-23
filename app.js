@@ -16,7 +16,7 @@ const cors = require('cors');
 const app = express();
 
 const corsOptions = {
-  origin: '*',
+  origin: ['http://localhost:8080', 'https://news-expl0rer.tk'],
   credentials: true,
 };
 

@@ -52,6 +52,7 @@ module.exports.login = async (req, res, next) => {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true,
+        domain: 'news-expl0rer.tk',
       })
       .json({ token });
   } catch (err) {
