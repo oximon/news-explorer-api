@@ -51,7 +51,6 @@ module.exports.login = async (req, res, next) => {
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        domain: 'http://localhost:8080',
       })
       .send({ token });
   } catch (err) {
