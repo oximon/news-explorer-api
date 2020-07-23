@@ -5,13 +5,13 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { centerErrors } = require('./middlewares/centerErrors');
 const { PORT, DATABASE_URL } = require('./config');
 const routers = require('./routes/index');
 const apiLimiter = require('./middlewares/limitter');
-const cors = require('cors');
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-console.log(DATABASE_URL);
+
 mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
