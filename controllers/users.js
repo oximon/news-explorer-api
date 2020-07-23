@@ -51,6 +51,7 @@ module.exports.login = async (req, res, next) => {
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
+        domain: 'http://localhost:8080',
       })
       .send({ token });
   } catch (err) {
@@ -63,7 +64,6 @@ module.exports.logout = async (req, res, next) => {
     return res.cookie('jwt', '', {
       maxAge: 0,
       httpOnly: true,
-      domail: 'http://localhost:8080',
     }).send({ message: 'Вы вышли из системы' });
   } catch (err) {
     return next();
