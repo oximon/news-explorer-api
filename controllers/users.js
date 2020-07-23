@@ -52,7 +52,7 @@ module.exports.login = async (req, res, next) => {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
       })
-      .json({ token });
+      .send({ token });
   } catch (err) {
     return next(new AutorizationError(incorrectLoginOrPaswword));
   }
