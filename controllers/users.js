@@ -60,9 +60,10 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.logout = async (req, res, next) => {
   try {
-    res.cookie('jwt', '', {
+    return res.cookie('jwt', '', {
       maxAge: 0,
       httpOnly: true,
+      domail: 'http://localhost:8080',
     }).send({ message: 'Вы вышли из системы' });
   } catch (err) {
     return next();

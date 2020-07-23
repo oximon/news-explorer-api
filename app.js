@@ -19,7 +19,7 @@ const corsOptions = {
   origin: ['http://localhost:8080', 'https://news-expl0rer.tk'],
   credentials: true,
   preflightContinue: false,
-  methods:['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
 };
 
 app.use(cors(corsOptions));
