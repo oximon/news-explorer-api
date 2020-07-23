@@ -16,7 +16,7 @@ const apiLimiter = require('./middlewares/limitter');
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:8080', 'https://news-expl0rer.tk', 'https://oximon.github.io/news-explorer/'],
+  origin: ['http://localhost:8080', 'https://news-expl0rer.tk', 'https://oximon.github.io'],
   credentials: true,
 };
 
