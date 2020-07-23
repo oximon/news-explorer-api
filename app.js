@@ -18,10 +18,6 @@ const app = express();
 const corsOptions = {
   origin: ['http://localhost:8080', 'https://news-expl0rer.tk'],
   credentials: true,
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'x-requested-with', 'origin', 'accept', 'x-access-token', 'Authorization'],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
 };
 
 app.use(cookieParser());
