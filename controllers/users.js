@@ -47,12 +47,7 @@ module.exports.login = async (req, res, next) => {
       JWT_KEYS,
       { expiresIn: '7d' },
     );
-    return res
-      .cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-      })
-      .send({ token });
+    return res.send({ token });
   } catch (err) {
     return next(new AutorizationError(incorrectLoginOrPaswword));
   }
