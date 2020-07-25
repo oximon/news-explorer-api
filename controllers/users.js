@@ -52,14 +52,3 @@ module.exports.login = async (req, res, next) => {
     return next(new AutorizationError(incorrectLoginOrPaswword));
   }
 };
-
-module.exports.logout = async (req, res, next) => {
-  try {
-    return res.cookie('jwt', '', {
-      maxAge: 0,
-      httpOnly: true,
-    }).send({ message: 'Вы вышли из системы' });
-  } catch (err) {
-    return next();
-  }
-};
